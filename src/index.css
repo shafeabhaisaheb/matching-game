@@ -1,37 +1,64 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-image:url('img/bg1.jpg'); 
 }
 
 ol, ul {
   padding-left: 30px;
 }
 
-
 .card {
-  background: #fff;
   border:1px solid #999;
   float:left;
-  font-size:14px;
-  height:50px;
-  width:30px;
-  padding:40px;
-  text-align:center;
-  margin:20px 20px;
+  border-radius:10%;
+  height:100px;
+  width:60px;
+  padding:20px;
+  margin:20px;
+  color:white;
 }
 
-.card:hover {
-  height:54px;
-  width:34px;
+.card img {
+  padding:0px;
+  margin:0px;
+  border-radius:10%;
+  width:60px;
+  height:100px;
 }
 
-.card:focus {
-  outline: none;
+.hidden {
+  color:blue;
+  border:solid 1px white;
+  padding:0px;
+  margin:10px;
+}
+
+.hidden:hover {
+  color:pink;
+}
+
+.flipped {
+  border:solid 1px white;
+  padding:0;
+  margin:10px;
+}
+
+.matched {
+  transition-property: border;
+  transition-duration: 2s;
+  transition-delay: 0s;
+  border: solid 2px yellow; 
+  padding:0;
+  margin:10px;
 }
 
 .game {
+  width:75%;
+  margin: auto;
+  padding-top:5%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 

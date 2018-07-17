@@ -3,23 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
+
 class Card extends React.Component {
 
 	render() {
 
-		var reveal = {
-  			color: 'white',
-  			backgroundColor: 'black',
-		};
+		var url = this.props.img;
+		let className = 'card';
+		
 
 		if(this.props.hidden) {
-			return <div class="card" onClick={() => this.props.onClick()}> </div>;
+			className += ' hidden';
+			return <div className={className} onClick={() => this.props.onClick()}> <img src="img/bg2.png"/> </div>;
 		}
 		else {
+			if(this.props.matched) {
+				className += ' matched';
+				return (
+					<div className={className} onClick={() => this.props.onClick()}> <img src={url}/> </div>
+				);
+			}
+			else {
+				className += ' flipped';
 			return (
-			<div class="card" style={reveal} onClick={()=>this.props.onClick()}>
-				{this.props.card}
+			<div className={className} onClick={()=>this.props.onClick()}> <img src={url}/>
 			</div> );
+			}
 		}
 	}
 }
@@ -33,12 +42,12 @@ class Board extends React.Component {
 		/*Two cards for each value, intially face down*/
 
 		const cards = new Array(
-			{value:"Pooh", hidden:true}, 
-			{value:"Pooh", hidden:true}, 
-			{value:"Owl", hidden:true}, 
-			{value:"Owl", hidden:true}, 
-			{value:"Tigger", hidden:true}, 
-			{value:"Tigger", hidden:true} 
+			{value:"Pooh", img:"img/img1.jpg", hidden:true, matched:false}, 
+			{value:"Pooh", img:"img/img1.jpg", hidden:true, matched:false}, 
+			{value:"Owl", img:"img/img2.jpg", hidden:true, matched:false}, 
+			{value:"Owl", img:"img/img2.jpg", hidden:true, matched:false}, 
+			{value:"Tigger", img:"img/img3.jpg", hidden:true, matched:false}, 
+			{value:"Tigger", img:"img/img3.jpg", hidden:true, matched:false} 
 		);
 
 		/* Three main game states: waiting to flip first card, waiting to flip second card, and wrong guess */
@@ -106,6 +115,8 @@ class Board extends React.Component {
 					this.flipCard(i);
 					if(this.state.firstCard === card.value) {
 						/*if it's a match, check to see if any more cards need to be found*/
+						this.setMatched(this.state.firstIndex);
+						this.setMatched(i);
 						if(!this.checkWin()) {
 						this.setState({gameState:"Flip First Card"});
 						}
@@ -134,6 +145,13 @@ class Board extends React.Component {
 		
 		const cards = this.state.cards.slice();
 		cards[i].hidden = !cards[i].hidden;	
+		this.setState({cards:cards});
+	}
+
+	setMatched(i) {
+		
+		const cards = this.state.cards.slice();
+		cards[i].matched = true;	
 		this.setState({cards:cards});
 	}
 
@@ -166,7 +184,7 @@ class Board extends React.Component {
 
 		/*map each card element and pass the value, hidden, index, and handle click function to Card component*/
 
-		const listCards = cards.map((card, index) => <Card card={card.value} hidden={card.hidden} onClick={()=>this.handleClick(index)} />);
+		const listCards = cards.map((card, index) => <Card card={card.value} img={card.img} hidden={card.hidden} matched={card.matched} onClick={()=>this.handleClick(index)} />);
 
 		/* if state changes to game won, display victory message along with board */
 
@@ -216,7 +234,7 @@ class Game extends React.Component {
   	if(!this.state.new) {
     return (
       <div className="game">
-        <div className="game-board">
+        <div>
           <Board />
         </div>
         <div>
