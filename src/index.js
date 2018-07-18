@@ -9,30 +9,32 @@ class Card extends React.Component {
 	render() {
 
 		var url = this.props.img;
-		let className = 'card';
-		
 
-		if(this.props.hidden) {
-			className += ' hidden';
-			return <div className={className} onClick={() => this.props.onClick()}> <img src="img/bg2.png"/> </div>;
-		}
-		else {
-			if(this.props.matched) {
-				className += ' matched';
-				return (
-					<div className={className} onClick={() => this.props.onClick()}> <img src={url}/> </div>
-				);
-			}
-			else {
-				className += ' flipped';
-			return (
-			<div className={className} onClick={()=>this.props.onClick()}> <img src={url}/>
-			</div> );
-			}
-		}
+		let className = "card";
+		return (
+
+			/* if card is hidden, apply 'card' and 'check' classes. if flipped, check to see if matched. */
+			<div class="container">
+					<div className={(!this.props.hidden) 
+									? ((this.props.matched) 
+										? (className += ' flipcard matched') 
+										: (className += ' flipcard')) 
+									: (className += ' check')} 
+									onClick={() => this.props.onClick()}>
+						<div class="side front">
+							<img src="img/bg4.png" />
+						</div>
+						<div class="side back">
+							<img src={url} />
+						</div>
+					</div>
+				</div>
+		);
+
 	}
 }
 
+ 
 
 class Board extends React.Component {
 
@@ -42,12 +44,18 @@ class Board extends React.Component {
 		/*Two cards for each value, intially face down*/
 
 		const cards = new Array(
-			{value:"Pooh", img:"img/img1.jpg", hidden:true, matched:false}, 
-			{value:"Pooh", img:"img/img1.jpg", hidden:true, matched:false}, 
-			{value:"Owl", img:"img/img2.jpg", hidden:true, matched:false}, 
-			{value:"Owl", img:"img/img2.jpg", hidden:true, matched:false}, 
-			{value:"Tigger", img:"img/img3.jpg", hidden:true, matched:false}, 
-			{value:"Tigger", img:"img/img3.jpg", hidden:true, matched:false} 
+			{value:"Pooh", img:"img/pooh.png", hidden:true, matched:false}, 
+			{value:"Pooh", img:"img/pooh.png", hidden:true, matched:false}, 
+			{value:"Roo", img:"img/roo.png", hidden:true, matched:false}, 
+			{value:"Roo", img:"img/roo.png", hidden:true, matched:false}, 
+			{value:"Tigger", img:"img/tigger.png", hidden:true, matched:false}, 
+			{value:"Tigger", img:"img/tigger.png", hidden:true, matched:false},
+			{value:"Eeyore", img:"img/eeyore.png", hidden:true, matched:false}, 
+			{value:"Eeyore", img:"img/eeyore.png", hidden:true, matched:false}, 
+			{value:"Piglet", img:"img/piglet.png", hidden:true, matched:false}, 
+			{value:"Piglet", img:"img/piglet.png", hidden:true, matched:false}, 
+			{value:"Owl", img:"img/owl.png", hidden:true, matched:false}, 
+			{value:"Owl", img:"img/owl.png", hidden:true, matched:false}
 		);
 
 		/* Three main game states: waiting to flip first card, waiting to flip second card, and wrong guess */
@@ -55,9 +63,8 @@ class Board extends React.Component {
 		const states = {
 			flipfirst:"Flip First Card",
 			flipsecond: "Flip Second Card",
-			wrong: "Wrong Choice",
-			won: "Victory"
-		};
+			wrong: "Wrong Choice"
+					};
 
 		/*State for Board component. Initalize begin to true to call shuffle*/
 
@@ -115,11 +122,12 @@ class Board extends React.Component {
 					this.flipCard(i);
 					if(this.state.firstCard === card.value) {
 						/*if it's a match, check to see if any more cards need to be found*/
-						this.setMatched(this.state.firstIndex);
-						this.setMatched(i);
 						if(!this.checkWin()) {
 						this.setState({gameState:"Flip First Card"});
 						}
+						this.setMatched(this.state.firstIndex);
+						this.setMatched(i);
+						
 					}
 					else {
 						/*if not a match, save second card so we can hide it again */
@@ -167,7 +175,7 @@ class Board extends React.Component {
 			}
 
 			if(flag === 0) {
-				this.setState({gameState:"Victory"});
+				{this.props.declareVictory()}
 				return true;
 			}
 			else return false;
@@ -185,34 +193,17 @@ class Board extends React.Component {
 		/*map each card element and pass the value, hidden, index, and handle click function to Card component*/
 
 		const listCards = cards.map((card, index) => <Card card={card.value} img={card.img} hidden={card.hidden} matched={card.matched} onClick={()=>this.handleClick(index)} />);
-
-		/* if state changes to game won, display victory message along with board */
-
-		if(this.state.gameState === "Victory") {
-			return (
-			<div>
-		        <div className="board-row">
-		         	{listCards}
-		        </div>
-		        <div> YOU WON !</div>
-		      </div>
-		    );
-		}
-
-		else {
 		    return (
 		      <div>
-		        <div> {this.state.gameState} </div>
-		        <div> {this.state.firstCard} | {this.state.secondCard} </div>
+		        <div className="instructions">Can you find Pooh and his friends in the Hundred Acre Woods?</div>
 		        <div className="board-row">
 		         	{listCards}
 		        </div>
 		      </div>
 		    );
-		}
-		
-
   }
+
+  /*  <button onClick={this.props.action}> Start Over </button> */
 
 }
 
@@ -222,37 +213,45 @@ class Game extends React.Component {
 
   constructor(props) {
   	super(props);
+
+  	this.handleReplay = this.handleReplay.bind(this);
+  	this.handleWin = this.handleWin.bind(this);
   	this.state = {
-  		new: false
+  		startover:false,
+  		victory:false
   	};
   }
 
+  handleReplay() {
+  	this.setState({startover:!this.state.startover, victory: false});
+  }
+
+  handleWin() {
+  	this.setState({victory: !this.state.victory});
+  }
+
+
   render() {
 
-  	/* Re-renders Game component per click by setting state */
+  	if(!this.state.startover) {
+  		return(
+  			<div className="game">
+  				<div className={this.state.victory? "greyed" : ""}><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
+  				<div className={this.state.victory? "test" : "hide"}>Victory!<button onClick={this.handleReplay}>Play Again?</button></div>
+  			</div>
+  		);
+  	}
 
-  	if(!this.state.new) {
-    return (
-      <div className="game">
-        <div>
-          <Board />
-        </div>
-        <div>
-        <button onClick={() =>this.setState({new:!this.state.new})}>Start Over</button>
-        </div>
-      </div>
-    );
-	}
-	else {
-		return (
-      <div className="game">
-       <Board />
-       <div>
-        <button onClick={() =>this.setState({new:!this.state.new})}>Start Over</button>
-       </div>
-      </div>
-    );
-	}
+  	else {
+  		return (
+  		<div className="game">
+  				<div></div>
+  				<div className={this.state.victory? "greyed" : ""}><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
+  				<div className={this.state.victory? "test" : "hide"}>Victory!<button onClick={this.handleReplay}>Play Again?</button></div>
+  			</div>
+  		);
+  	}
+
   }
 }
 

@@ -1,69 +1,302 @@
+@keyframes pop-in {
+  0%  { 
+    transform: scale(.5, .5);
+    opacity: 0; 
+  }
+  40% { opacity: 1; }
+  65% { transform: scale(1.1, 1.1); }
+  100% { transform: scale(1, 1); }
+}
+
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#root {
+  width:80%;
+  margin:auto;
+}
+
+html {
+  background: url(img/poohbg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
-  background-image:url('img/bg1.jpg'); 
+  font-family: 'Gaegu', cursive;
+
 }
 
 ol, ul {
   padding-left: 30px;
 }
 
+.overflow {
+  overflow:hidden;
+}
+
+.hide {
+  display:none;
+}
+
+.test {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  border: 6px solid purple;
+  width:200px;
+  height:200px;
+  margin:auto;
+  margin-top:-10%;
+  z-index: 4;
+  animation-name: pop-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+
+.test2 {
+  z-index:1;
+}
+
+.container {
+    cursor: grab;
+    position: relative;
+    height: 125px;
+    width: 100px;
+    perspective: 600;
+    float:left;
+    transition: transform 2s ease-in-out;
+    margin:10px;
+}
+
+
+.check:hover {
+  transform: rotateX(20deg);
+  box-shadow: 0 10px 10px rgba(50,50,50,.2);
+}
+
+
 .card {
-  border:1px solid #999;
-  float:left;
-  border-radius:10%;
-  height:100px;
-  width:60px;
-  padding:20px;
-  margin:20px;
-  color:white;
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   transform-style: preserve-3d;
+   transition: all 1s ease-in-out;
+   border-radius:5%;
+
+
 }
 
 .card img {
-  padding:0px;
-  margin:0px;
-  border-radius:10%;
-  width:60px;
-  height:100px;
+  width:100px;
+  height:125px;
+  border-radius:5%;
+
 }
 
-.hidden {
-  color:blue;
-  border:solid 1px white;
-  padding:0px;
-  margin:10px;
+.flipcard {
+    transform: rotateX(180deg);
 }
 
-.hidden:hover {
-  color:pink;
+.side {
+    backface-visibility: hidden;
+    border: 3px solid #ddf3ec;
+    border-radius:5%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
 }
 
-.flipped {
-  border:solid 1px white;
-  padding:0;
-  margin:10px;
+.back {
+    transform: rotateX(180deg);
+    cursor: auto !important;
+
+    border:0px !important;
+    box-shadow: 1px 2px 4px lightslategray;
 }
 
-.matched {
-  transition-property: border;
-  transition-duration: 2s;
-  transition-delay: 0s;
-  border: solid 2px yellow; 
-  padding:0;
-  margin:10px;
+.matched .back img {
+  cursor:auto;
+  animation: 1s 1s beat;
 }
 
 .game {
   width:75%;
   margin: auto;
-  padding-top:5%;
+  padding:50px;
   display: flex;
   flex-direction: column;
 }
 
+.greyed {
+  opacity:0.6;
+  z-index:-2;
+}
+
+.instructions {
+  color:white;
+  text-align:center;
+  font-size:20px;
+}
 
 .board-row:after {
   clear: both;
   content: "";
   display: table;
 }
+
+
+/* On screens that are 400px or less */
+@media screen and (max-width: 400px) {
+
+    #root {
+    width:100%;
+  }
+    .container {
+      width: 66px;
+      height: 83px;
+      margin:5px;
+  }
+
+    .card img {
+    width:66px;
+    height:83px;
+  }
+
+  .board-row {
+    padding-top:30px;
+    padding-left:15px;
+  }
+  .game {
+    width:250px;
+    padding:0px; 
+  }
+
+}
+
+/* On screens that are 400px or more */
+@media screen and (min-width: 400px) {
+
+  #root {
+  width:100%;
+}
+
+  .container {
+    width: 66px;
+    height: 83px;
+    margin:5px;
+}
+
+  .card img {
+  width:66px;
+  height:83px;
+}
+
+.board-row {
+  padding-top:30px;
+  padding-left:15px;
+}
+
+.game {
+  width:335px;
+  padding:20px;
+}
+
+}
+
+/* On screens that are 600px or more */
+@media screen and (min-width: 600px) {
+
+  .container {
+    width: 83px;
+    height: 104px;
+    margin:5px;
+}
+
+  .card img {
+  width:83px;
+  height:104px;
+}
+
+.board-row {
+  padding-top:15px;
+  padding-left:15px;
+}
+
+.game {
+  width:400px;
+  padding:20px;
+}
+
+}
+
+/* On screens that are 900px or more */
+@media screen and (min-width: 900px) {
+
+  .container {
+    width: 100px;
+    height: 125px;
+    margin:10px;
+}
+
+  .card img {
+  width:100px;
+  height:125px;
+}
+
+.board-row {
+  padding-top:15px;
+  padding-left:15px;
+}
+
+.game {
+  width:500px;
+  padding:20px;
+}
+
+}
+
+@media screen and (min-width: 1200px) {
+
+  .container {
+    width: 120px;
+    height: 150px;
+    margin:10px;
+}
+
+  .card img {
+  width:120px;
+  height:150px;
+}
+
+.board-row {
+  padding-top:15px;
+  padding-left:15px;
+}
+
+.game {
+  width:600px;
+  padding:20px;
+}
+
+}
+
