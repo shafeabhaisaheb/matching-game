@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Gaegu:400');
+
+
 @keyframes pop-in {
   0%  { 
     transform: scale(.5, .5);
@@ -41,7 +44,6 @@ html {
 
 body {
   font-family: 'Gaegu', cursive;
-
 }
 
 ol, ul {
@@ -71,7 +73,7 @@ ol, ul {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   color:slategray;
-  font-size:20px;
+  font-size:2em;
   box-shadow: 0 10px 10px rgba(50,50,50,.2);
 }
 
@@ -87,7 +89,7 @@ ol, ul {
   color: white;
   padding: 16px 32px;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.5em;
   text-transform:uppercase;
   margin: 15px 2px;
   opacity: 0.6;
@@ -187,7 +189,9 @@ ol, ul {
 .instructions {
   color:white;
   text-align:center;
-  font-size:20px;
+  font-size:28px;
+  word-spacing:-3px;
+  letter-spacing:-2px;
 }
 
 .board-row:after {
@@ -200,8 +204,17 @@ ol, ul {
 /* On screens that are 400px or less */
 @media screen and (max-width: 400px) {
 
+html {
+  background: url(img/poohbgmobile.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
     #root {
     width:100%;
+    margin-bottom:30px;
   }
     .container {
       width: 66px;
@@ -267,7 +280,6 @@ ol, ul {
 
 .modal button {
   padding: 10px 25px;
-  font-size: 12px;
   margin: 15px 2px;
 }
 
