@@ -56,26 +56,53 @@ ol, ul {
   display:none;
 }
 
-.test {
+.modal {
   background-color: white;
-  padding: 20px;
+  padding: 35px 40px;
   text-align: center;
-  border: 6px solid purple;
+  border-radius:10%;
   width:200px;
-  height:200px;
+  height:100px;
   margin:auto;
-  margin-top:-10%;
+  margin-left:-15px;
+  margin-top:-350px;
   z-index: 4;
   animation-name: pop-in;
   animation-duration: 1s;
   animation-fill-mode: forwards;
+  color:slategray;
+  font-size:20px;
+  box-shadow: 0 10px 10px rgba(50,50,50,.2);
 }
 
-
-.test2 {
-  z-index:1;
+.modal img {
+  width:300px;
+  margin-top:-33px;
 }
 
+.modal button {
+  background-color: #666699;
+  border: none;
+  border-radius:5%;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 14px;
+  text-transform:uppercase;
+  margin: 15px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+   font-family: 'Gaegu', cursive;
+  letter-spacing:1px;
+}
+
+.modal button:hover {
+  opacity:0.4;
+  transform:scale(1.1);
+}
 .container {
     cursor: grab;
     position: relative;
@@ -136,7 +163,8 @@ ol, ul {
 
 .matched .back img {
   cursor:auto;
-  animation: 1s 1s beat;
+  animation: 1s beat;
+  animation-delay:1s;
 }
 
 .game {
@@ -148,8 +176,12 @@ ol, ul {
 }
 
 .greyed {
+  transition-delay:2s;
+  transition: all 1s;
   opacity:0.6;
   z-index:-2;
+  animation: 1s beat;
+  animation-delay:1.5s;
 }
 
 .instructions {
@@ -184,7 +216,7 @@ ol, ul {
 
   .board-row {
     padding-top:30px;
-    padding-left:15px;
+    padding-left:7px;
   }
   .game {
     width:250px;
@@ -221,6 +253,24 @@ ol, ul {
   padding:20px;
 }
 
+.modal {
+  margin:auto;
+  margin-top:-250px;
+  width:170px;
+  height:80px;
+ 
+}
+
+.modal img {
+  width:325px;
+}
+
+.modal button {
+  padding: 10px 25px;
+  font-size: 12px;
+  margin: 15px 2px;
+}
+
 }
 
 /* On screens that are 600px or more */
@@ -230,21 +280,25 @@ ol, ul {
     width: 83px;
     height: 104px;
     margin:5px;
-}
+  }
 
   .card img {
   width:83px;
   height:104px;
-}
+  }
 
-.board-row {
+  .board-row {
   padding-top:15px;
   padding-left:15px;
-}
+  }
 
-.game {
+ .game {
   width:400px;
   padding:20px;
+  }
+
+.modal img {
+  width:300px;
 }
 
 }
@@ -273,6 +327,16 @@ ol, ul {
   padding:20px;
 }
 
+.modal {
+  margin-top:-330px;
+  width:170px;
+  height:80px;
+}
+
+.modal img {
+  width:350px;
+}
+
 }
 
 @media screen and (min-width: 1200px) {
@@ -296,6 +360,17 @@ ol, ul {
 .game {
   width:600px;
   padding:20px;
+}
+
+.modal {
+  margin-top:-380px;
+  width:275px;
+  height:80px;
+}
+
+.modal img {
+  width:400px;
+  margin-top:-40px;
 }
 
 }

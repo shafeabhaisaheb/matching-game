@@ -21,7 +21,7 @@ class Card extends React.Component {
 										: (className += ' flipcard')) 
 									: (className += ' check')} 
 									onClick={() => this.props.onClick()}>
-						<div class="side front">
+						<div class="side">
 							<img src="img/bg4.png" />
 						</div>
 						<div class="side back">
@@ -72,6 +72,7 @@ class Board extends React.Component {
 			cards: cards,
 			gameState: states.flipfirst,
 			begin:true,
+			victory:false,
 			firstCard: null,
 			secondCard: null,
 			firstIndex: null,
@@ -176,6 +177,7 @@ class Board extends React.Component {
 
 			if(flag === 0) {
 				{this.props.declareVictory()}
+				this.setState({victory: true});
 				return true;
 			}
 			else return false;
@@ -195,8 +197,8 @@ class Board extends React.Component {
 		const listCards = cards.map((card, index) => <Card card={card.value} img={card.img} hidden={card.hidden} matched={card.matched} onClick={()=>this.handleClick(index)} />);
 		    return (
 		      <div>
-		        <div className="instructions">Can you find Pooh and his friends in the Hundred Acre Woods?</div>
-		        <div className="board-row">
+		        <div className="instructions">Can you find Pooh and his friends in the Hundred Acre Woods? {this.state.victory}</div>
+		        <div className={this.state.victory? "greyed board-row" : "board-row"}>
 		         	{listCards}
 		        </div>
 		      </div>
@@ -236,8 +238,8 @@ class Game extends React.Component {
   	if(!this.state.startover) {
   		return(
   			<div className="game">
-  				<div className={this.state.victory? "greyed" : ""}><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
-  				<div className={this.state.victory? "test" : "hide"}>Victory!<button onClick={this.handleReplay}>Play Again?</button></div>
+  				<div><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
+  				<div className={this.state.victory? "modal" : "hide"}>Wonderful!<br /><button onClick={this.handleReplay}>Once more?</button><br /><img src="img/testpooh.gif"/></div>
   			</div>
   		);
   	}
@@ -246,8 +248,8 @@ class Game extends React.Component {
   		return (
   		<div className="game">
   				<div></div>
-  				<div className={this.state.victory? "greyed" : ""}><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
-  				<div className={this.state.victory? "test" : "hide"}>Victory!<button onClick={this.handleReplay}>Play Again?</button></div>
+  				<div><Board action={this.handleReplay} declareVictory={this.handleWin} /></div>
+  				<div className={this.state.victory? "modal" : "hide"}>Wonderful!<br /><button onClick={this.handleReplay}>Once more?</button></div>
   			</div>
   		);
   	}
