@@ -210,11 +210,18 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+ }
+
+ .instructions {
+  font-size:22px;
+  word-spacing:-3px;
+  letter-spacing:-2px;
 }
 
     #root {
     width:100%;
-    margin-bottom:30px;
+    margin-bottom:80px;
+    margin-top:45px;
   }
     .container {
       width: 66px;
@@ -228,7 +235,7 @@ html {
   }
 
   .board-row {
-    padding-top:30px;
+    padding-top:20px;
     padding-left:7px;
   }
   .game {
